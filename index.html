@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UniGO — AI Professor Finder</title>
+<meta name="description" content="Find your perfect IIT research mentor with AI-powered semantic matching. 1,583 professors across 16 IITs.">
+<meta property="og:title" content="UniGO — AI-Powered Professor Finder">
+<meta property="og:description" content="Describe your research interests in plain English. Claude AI matches you to the right professor across 16 IITs.">
+<meta property="og:type" content="website">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #0a0a14;
+    color: #fff;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+  .logo { font-size: 32px; font-weight: 800; letter-spacing: -1px; }
+  .logo span { color: #1a1aff; }
+  p { color: rgba(255,255,255,0.45); font-size: 14px; }
+  .bar {
+    width: 180px; height: 3px;
+    background: rgba(26,26,255,0.2);
+    border-radius: 2px; overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%; width: 0;
+    background: #1a1aff;
+    border-radius: 2px;
+    animation: load 1s ease forwards;
+  }
+  @keyframes load { to { width: 100%; } }
+</style>
+<script>
+  // Redirect after brief splash
+  setTimeout(() => { window.location.replace('./UniGO_AI.html'); }, 1000);
+</script>
+</head>
+<body>
+  <div class="logo">Uni<span>GO</span></div>
+  <p>Loading AI Professor Finder…</p>
+  <div class="bar"><div class="bar-fill"></div></div>
+</body>
+</html>
