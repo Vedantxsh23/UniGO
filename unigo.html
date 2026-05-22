@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UniGO — AI-Powered Professor Finder</title>
+<title>UniGO — AI Professor Finder</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -11,11 +11,13 @@
   --brand:#1a1aff;--brand-soft:#e8e8ff;--accent:#ff4d00;
   --dark:#0a0a14;--surface:#f7f7fc;--card:#fff;
   --text:#0a0a14;--muted:#6b6b80;--border:rgba(10,10,20,0.1);
-  --r:16px;--r-sm:8px;--green:#14a14a;--green-bg:#e6f9ee;
+  --r:16px;--green:#14a14a;--green-bg:#e6f9ee;
 }
 body{font-family:'DM Sans',sans-serif;background:var(--surface);color:var(--text);min-height:100vh}
+
+/* NAV */
 nav{background:var(--dark);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:60px;position:sticky;top:0;z-index:100}
-.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:22px;color:#fff;letter-spacing:-0.5px}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:22px;color:#fff;letter-spacing:-0.5px;cursor:pointer}
 .logo span{color:var(--brand)}
 .logo sub{font-size:10px;color:#9090ff;font-weight:400;letter-spacing:1px;text-transform:uppercase;margin-left:4px;vertical-align:super}
 .nav-links{display:flex;gap:24px}
@@ -42,7 +44,7 @@ nav{background:var(--dark);padding:0 2rem;display:flex;align-items:center;justif
 .stat:last-child{border-right:none}
 .stat-num{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:var(--brand)}
 .stat-label{font-size:11px;color:var(--muted);font-weight:500;margin-top:2px;text-transform:uppercase;letter-spacing:.5px}
-.section{padding:56px 2rem;max-width:900px;margin:0 auto}
+.section{padding:56px 2rem;max-width:960px;margin:0 auto}
 .sec-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--brand);margin-bottom:8px}
 .sec-title{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;letter-spacing:-1px;margin-bottom:8px}
 .sec-sub{color:var(--muted);font-size:15px;margin-bottom:32px;font-weight:300}
@@ -52,12 +54,25 @@ nav{background:var(--dark);padding:0 2rem;display:flex;align-items:center;justif
 .step h3{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;margin-bottom:6px}
 .step p{color:var(--muted);font-size:13px;line-height:1.6}
 
-/* FINDER PAGE */
+/* TEAM SECTION */
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.team-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:28px 24px;text-align:center;transition:border-color .15s,box-shadow .15s}
+.team-card:hover{border-color:var(--brand);box-shadow:0 4px 20px rgba(26,26,255,0.08)}
+.team-photo{width:80px;height:80px;border-radius:50%;object-fit:cover;margin:0 auto 14px;display:block;border:3px solid var(--brand-soft)}
+.team-photo-placeholder{width:80px;height:80px;border-radius:50%;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:22px;color:#fff}
+.team-name{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:4px}
+.team-role{font-size:12px;color:var(--muted);margin-bottom:14px}
+.team-links{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.team-link{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:8px;font-size:12px;font-weight:600;text-decoration:none;transition:opacity .15s}
+.team-link:hover{opacity:.8}
+.tl-linkedin{background:#0a66c2;color:#fff}
+.tl-github{background:#24292e;color:#fff}
+.tl-email{background:var(--brand-soft);color:var(--brand)}
+
+/* FINDER */
 .wrap{max-width:980px;margin:0 auto;padding:36px 2rem}
 .pg-title{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;letter-spacing:-0.5px;margin-bottom:4px}
 .pg-sub{color:var(--muted);font-size:14px;margin-bottom:24px}
-
-/* AI MATCH BOX */
 .ai-box{background:linear-gradient(135deg,#0a0a14 0%,#0d0d2b 100%);border:1px solid rgba(26,26,255,0.35);border-radius:var(--r);padding:24px;margin-bottom:20px;position:relative;overflow:hidden}
 .ai-box::before{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;background:radial-gradient(circle,rgba(26,26,255,0.2) 0%,transparent 70%);pointer-events:none}
 .ai-box-header{display:flex;align-items:center;gap:10px;margin-bottom:14px}
@@ -68,15 +83,12 @@ nav{background:var(--dark);padding:0 2rem;display:flex;align-items:center;justif
 .ai-textarea::placeholder{color:rgba(255,255,255,0.3)}
 .ai-textarea:focus{border-color:rgba(26,26,255,0.6)}
 .ai-actions{display:flex;align-items:center;justify-content:space-between;margin-top:12px;flex-wrap:wrap;gap:8px}
-.ai-btn{background:var(--brand);color:#fff;border:none;border-radius:10px;padding:10px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:6px;transition:opacity .15s}
-.ai-btn:hover{opacity:.88}
+.ai-btn{background:var(--brand);color:#fff;border:none;border-radius:10px;padding:10px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:6px}
 .ai-btn:disabled{opacity:.45;cursor:not-allowed}
 .ai-status{font-size:12px;color:rgba(255,255,255,0.4);display:flex;align-items:center;gap:6px}
 .ai-spinner{width:12px;height:12px;border:2px solid rgba(255,255,255,0.2);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .ai-result-bar{background:rgba(77,255,145,0.08);border:1px solid rgba(77,255,145,0.2);border-radius:8px;padding:10px 14px;margin-top:12px;font-size:12px;color:#4dff91;display:none;line-height:1.5}
-
-/* FILTER BOX */
 .filters{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:20px;margin-bottom:20px}
 .filter-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
 .fg label{display:block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
@@ -86,21 +98,7 @@ nav{background:var(--dark);padding:0 2rem;display:flex;align-items:center;justif
 .chip.on{background:var(--brand);color:#fff;border-color:var(--brand)}
 .chip.ai-highlight{border-color:#4dff91;color:#0a6b2e;background:#e6fff0}
 .filter-foot{display:flex;align-items:center;justify-content:space-between;margin-top:16px;flex-wrap:wrap;gap:10px}
-.search-btn{background:var(--dark);color:#fff;border:none;border-radius:12px;padding:11px 26px;font-size:14px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity .15s}
-.search-btn:hover{opacity:.85}
-
-/* SCRAPE BOX */
-.scrape-box{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:20px;margin-bottom:20px}
-.scrape-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-.scrape-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700}
-.scrape-sub{font-size:12px;color:var(--muted);margin-top:2px}
-.scrape-row{display:flex;gap:10px;align-items:center}
-.scrape-input{flex:1;padding:10px 14px;border:1px solid var(--border);border-radius:10px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;background:var(--surface)}
-.scrape-btn{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:background .15s}
-.scrape-btn:hover{background:var(--brand-soft)}
-.scrape-log{margin-top:12px;background:#f3f3f8;border-radius:8px;padding:10px 14px;font-size:12px;font-family:monospace;color:var(--muted);min-height:40px;max-height:120px;overflow-y:auto;display:none;line-height:1.7}
-
-/* RESULTS */
+.search-btn{background:var(--dark);color:#fff;border:none;border-radius:12px;padding:11px 26px;font-size:14px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif}
 .rl{font-size:13px;color:var(--muted);margin-bottom:12px;font-weight:500}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
 .pcard{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px;display:flex;gap:13px;cursor:pointer;transition:border-color .15s,box-shadow .15s;position:relative}
@@ -116,63 +114,82 @@ nav{background:var(--dark);padding:0 2rem;display:flex;align-items:center;justif
 .mbadge{font-size:11px;font-weight:700;padding:3px 8px;border-radius:6px;white-space:nowrap;flex-shrink:0;align-self:flex-start}
 .mbadge.high{color:#14a14a;background:#e6f9ee}
 .mbadge.ai{color:#1a1aff;background:#e8e8ff}
-.scrape-badge{position:absolute;top:10px;right:10px;font-size:10px;font-weight:700;color:#d97706;background:#fff8e6;padding:2px 7px;border-radius:5px;border:1px solid #f5d88a}
-
 .pgn{display:flex;gap:7px;align-items:center;margin-top:20px;justify-content:center;flex-wrap:wrap}
 .pgn button{padding:8px 13px;border:1px solid var(--border);border-radius:8px;background:var(--card);font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif}
 .pgn button.cur{background:var(--brand);color:#fff;border-color:var(--brand)}
 
-/* MODAL */
-.modal-bg{display:none;position:fixed;inset:0;background:rgba(10,10,20,0.65);z-index:200;align-items:center;justify-content:center;padding:1rem}
-.modal-bg.open{display:flex}
-.modal{background:var(--card);border-radius:20px;padding:28px;max-width:540px;width:100%;position:relative;max-height:85vh;overflow-y:auto}
-.modal-close{position:absolute;top:14px;right:14px;width:30px;height:30px;border:1px solid var(--border);border-radius:8px;background:var(--surface);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.m-top{display:flex;gap:14px;align-items:flex-start;margin-bottom:20px}
-.m-av{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:700;font-size:18px;flex-shrink:0}
-.m-name{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;letter-spacing:-0.5px;margin-bottom:3px}
-.m-meta{font-size:13px;color:var(--muted)}
-.m-sec{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin:18px 0 9px}
-.m-areas{display:flex;flex-wrap:wrap;gap:6px}
-.m-area{padding:5px 11px;border-radius:8px;font-size:12px;font-weight:500;background:var(--brand-soft);color:var(--brand)}
-.m-area.match{background:#e6fff0;color:#0a6b2e;border:1px solid #b0f0c8}
-.m-email{display:flex;align-items:center;gap:8px;background:var(--surface);border-radius:10px;padding:11px 14px;font-size:13px;font-weight:500;margin-top:8px}
-.m-email a{color:var(--brand);font-weight:600}
-.scrape-prof-btn{width:100%;margin-top:14px;background:var(--dark);color:#fff;border:none;border-radius:10px;padding:11px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:8px}
-.scrape-prof-log{margin-top:10px;background:#f3f3f8;border-radius:8px;padding:10px 14px;font-size:12px;font-family:monospace;color:var(--muted);display:none;line-height:1.7;max-height:160px;overflow-y:auto}
-
-/* COLLEGES */
+/* COLLEGES PAGE */
 .csearch{width:100%;padding:11px 16px;border:1px solid var(--border);border-radius:12px;font-size:14px;font-family:'DM Sans',sans-serif;background:var(--card);outline:none;margin-bottom:18px}
-.cgrid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
-.ccard{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px;cursor:pointer;transition:border-color .15s}
-.ccard:hover{border-color:var(--brand)}
-.crank{font-size:11px;font-weight:700;color:var(--accent);background:#fff3ef;padding:2px 8px;border-radius:6px;display:inline-block;margin-bottom:9px}
-.cname{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:3px}
-.cloc{font-size:12px;color:var(--muted);margin-bottom:11px}
-.cmeta{display:flex;gap:18px}
+.cgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.ccard{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;cursor:pointer;transition:border-color .15s,transform .15s,box-shadow .15s}
+.ccard:hover{border-color:var(--brand);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,26,255,0.1)}
+.ccard-img{width:100%;height:140px;object-fit:cover;background:#e8e8f0;display:block}
+.ccard-img-placeholder{width:100%;height:140px;display:flex;align-items:center;justify-content:center;font-size:32px;background:linear-gradient(135deg,#0a0a14,#1a1a40)}
+.ccard-body{padding:16px}
+.crank{font-size:11px;font-weight:700;color:var(--accent);background:#fff3ef;padding:2px 8px;border-radius:6px;display:inline-block;margin-bottom:8px}
+.cname{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;margin-bottom:3px}
+.cloc{font-size:12px;color:var(--muted);margin-bottom:10px}
+.cmeta{display:flex;gap:14px}
 .cmet{font-size:12px;color:var(--muted)}
-.cmet strong{color:var(--text);display:block;font-size:14px;font-weight:700}
+.cmet strong{color:var(--text);display:block;font-size:13px;font-weight:700}
+
+/* PROFESSOR PROFILE PAGE */
+.prof-page{max-width:780px;margin:0 auto;padding:36px 2rem}
+.prof-back{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);cursor:pointer;margin-bottom:24px;font-weight:500;transition:color .15s}
+.prof-back:hover{color:var(--brand)}
+.prof-hero{background:var(--dark);border-radius:20px;padding:32px;display:flex;gap:24px;align-items:flex-start;margin-bottom:24px;position:relative;overflow:hidden}
+.prof-hero::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(26,26,255,0.2) 0%,transparent 70%);pointer-events:none}
+.prof-avatar-lg{width:88px;height:88px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:28px;flex-shrink:0;border:3px solid rgba(255,255,255,0.1)}
+.prof-hero-info{flex:1;min-width:0}
+.prof-hero-name{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:#fff;letter-spacing:-0.5px;margin-bottom:4px}
+.prof-hero-college{font-size:14px;color:rgba(255,255,255,0.55);margin-bottom:12px}
+.prof-hero-links{display:flex;gap:8px;flex-wrap:wrap}
+.phl{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;border-radius:10px;font-size:12px;font-weight:600;text-decoration:none;transition:opacity .15s;cursor:pointer;border:none;font-family:'DM Sans',sans-serif}
+.phl:hover{opacity:.85}
+.phl-linkedin{background:#0a66c2;color:#fff}
+.phl-scholar{background:#4285f4;color:#fff}
+.phl-email{background:rgba(255,255,255,0.12);color:#fff}
+.phl-website{background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.8);border:1px solid rgba(255,255,255,0.15)}
+.prof-section{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:22px;margin-bottom:16px}
+.prof-sec-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:14px}
+.area-grid{display:flex;flex-wrap:wrap;gap:8px}
+.area-pill{padding:7px 14px;border-radius:10px;font-size:13px;font-weight:500;background:var(--brand-soft);color:var(--brand)}
+.area-pill.match{background:#e6fff0;color:#0a6b2e;border:1px solid #b0f0c8}
+.pub-list{display:flex;flex-direction:column;gap:10px}
+.pub-item{background:var(--surface);border-radius:10px;padding:12px 14px;font-size:13px;line-height:1.6}
+.pub-item strong{display:block;color:var(--text);margin-bottom:2px}
+.pub-item span{color:var(--muted);font-size:12px}
+.scrape-section{background:var(--dark);border-radius:var(--r);padding:22px;margin-bottom:16px}
+.scrape-sec-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.4);margin-bottom:14px}
+.live-btn{background:var(--brand);color:#fff;border:none;border-radius:10px;padding:11px 22px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;display:inline-flex;align-items:center;gap:7px}
+.live-btn:disabled{opacity:.5;cursor:not-allowed}
+.live-log{margin-top:12px;background:rgba(255,255,255,0.05);border-radius:8px;padding:12px 14px;font-size:12px;font-family:monospace;color:rgba(255,255,255,0.55);line-height:1.8;display:none;max-height:180px;overflow-y:auto}
+.college-banner{width:100%;height:160px;object-fit:cover;border-radius:12px;margin-bottom:14px;display:block}
+.college-banner-placeholder{width:100%;height:100px;border-radius:12px;margin-bottom:14px;display:flex;align-items:center;justify-content:center;font-size:28px;background:linear-gradient(135deg,#0a0a14,#1a1a40)}
 
 /* ABOUT */
 .about-hero{background:var(--dark);border-radius:20px;padding:44px 36px;margin-bottom:28px;position:relative;overflow:hidden}
 .about-hero::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(26,26,255,0.25) 0%,transparent 70%)}
 .about-hero h2{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:#fff;letter-spacing:-1px;margin-bottom:12px}
 .about-hero p{color:rgba(255,255,255,0.5);font-size:15px;line-height:1.7;font-weight:300;max-width:560px}
-.agrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.agrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:40px}
 .acard{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:22px}
 .acard .icon{font-size:22px;margin-bottom:11px}
 .acard h3{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;margin-bottom:5px}
 .acard p{color:var(--muted);font-size:13px;line-height:1.6}
 
-@media(max-width:600px){
-  .grid,.cgrid,.agrid,.steps,.filter-row{grid-template-columns:1fr}
-  .stats{justify-content:flex-start;overflow-x:auto}
+@media(max-width:680px){
+  .grid,.cgrid,.agrid,.steps,.filter-row,.team-grid{grid-template-columns:1fr}
+  .cgrid{grid-template-columns:1fr 1fr}
+  .stats{overflow-x:auto}
+  .prof-hero{flex-direction:column}
 }
 </style>
 </head>
 <body>
 
 <nav>
-  <div class="logo">Uni<span>GO</span><sub>AI</sub></div>
+  <div class="logo" onclick="go('home',document.querySelectorAll('.nav-links a')[0])">Uni<span>GO</span><sub>AI</sub></div>
   <div class="nav-links">
     <a class="active" onclick="go('home',this)">Home</a>
     <a onclick="go('finder',this)">Find Professor</a>
@@ -187,7 +204,7 @@ nav{background:var(--dark);padding:0 2rem;display:flex;align-items:center;justif
   <div class="hero">
     <div class="ai-pill"><span class="ai-dot"></span>AI-Powered Matching</div>
     <h1>Find Your Perfect<br><em>Research Guide</em></h1>
-    <p>Describe your research passion in plain English. Our AI reads your interests and semantically matches you to professors across 16 IITs.</p>
+    <p>Describe your research passion in plain English. Claude AI semantically matches you to professors across 16 IITs — not just keywords.</p>
     <div class="hero-btns">
       <button class="btn-primary" onclick="go('finder',document.querySelectorAll('.nav-links a')[1])">Try AI Matching →</button>
       <button class="btn-ghost" onclick="go('colleges',document.querySelectorAll('.nav-links a')[2])">Browse Colleges</button>
@@ -204,10 +221,16 @@ nav{background:var(--dark);padding:0 2rem;display:flex;align-items:center;justif
     <div class="sec-title">Smart matching in 3 steps</div>
     <div class="sec-sub">Keyword search misses context. AI understands what you actually mean.</div>
     <div class="steps">
-      <div class="step"><div class="step-n">1</div><h3>Describe your passion</h3><p>Type naturally — "I want to work on AI that helps diagnose diseases" — the AI understands intent, not just keywords.</p></div>
-      <div class="step"><div class="step-n">2</div><h3>AI ranks professors</h3><p>Claude reads each professor's research areas and scores the semantic overlap with your description.</p></div>
-      <div class="step"><div class="step-n">3</div><h3>Scrape live data</h3><p>Optionally fetch the professor's latest publications and Google Scholar data for an even richer match.</p></div>
+      <div class="step"><div class="step-n">1</div><h3>Describe your passion</h3><p>Type naturally — the AI understands intent, not just keywords.</p></div>
+      <div class="step"><div class="step-n">2</div><h3>AI ranks professors</h3><p>Claude scores every professor on semantic relevance to your description.</p></div>
+      <div class="step"><div class="step-n">3</div><h3>Click for full profile</h3><p>See research areas, email, LinkedIn, Google Scholar — and fetch live publications.</p></div>
     </div>
+  </div>
+  <div class="section" style="border-top:1px solid var(--border);padding-top:48px">
+    <div class="sec-label">The Team</div>
+    <div class="sec-title">Built by students, for students</div>
+    <div class="sec-sub">We got tired of cold-emailing wrong professors. So we fixed it.</div>
+    <div class="team-grid" id="team-grid"></div>
   </div>
 </div>
 
@@ -216,40 +239,21 @@ nav{background:var(--dark);padding:0 2rem;display:flex;align-items:center;justif
   <div class="wrap">
     <div class="pg-title">Find Your Professor</div>
     <div class="pg-sub">AI semantic matching + keyword filters working together</div>
-
-    <!-- AI BOX -->
     <div class="ai-box">
       <div class="ai-box-header">
         <div class="ai-icon">🤖</div>
         <div>
           <div class="ai-box-title">AI Interest Matcher</div>
-          <div class="ai-box-sub">Describe your research interests in plain English — Claude will rank professors semantically</div>
+          <div class="ai-box-sub">Describe your research interests — Claude ranks professors semantically</div>
         </div>
       </div>
-      <textarea class="ai-textarea" id="ai-input" placeholder="e.g. I'm passionate about using machine learning to understand protein folding and drug discovery. I also like working with large biological datasets..."></textarea>
+      <textarea class="ai-textarea" id="ai-input" placeholder="e.g. I'm passionate about using deep learning for medical imaging and drug discovery, especially working with biological datasets..."></textarea>
       <div class="ai-actions">
         <button class="ai-btn" id="ai-btn" onclick="runAIMatch()">✨ Match with AI</button>
         <span class="ai-status" id="ai-status"></span>
       </div>
       <div class="ai-result-bar" id="ai-result-bar"></div>
     </div>
-
-    <!-- SCRAPE BOX -->
-    <div class="scrape-box">
-      <div class="scrape-header">
-        <div>
-          <div class="scrape-title">🔍 Live Profile Scraper</div>
-          <div class="scrape-sub">Enter a professor's IIT page URL or Google Scholar link to fetch latest data</div>
-        </div>
-      </div>
-      <div class="scrape-row">
-        <input class="scrape-input" id="scrape-url" placeholder="https://www.iitb.ac.in/en/employee/prof-xyz  or  scholar.google.com/citations?user=..." />
-        <button class="scrape-btn" onclick="scrapeUrl()">Fetch Profile</button>
-      </div>
-      <div class="scrape-log" id="scrape-log"></div>
-    </div>
-
-    <!-- KEYWORD FILTERS -->
     <div class="filters">
       <div class="filter-row">
         <div class="fg">
@@ -262,15 +266,14 @@ nav{background:var(--dark);padding:0 2rem;display:flex;align-items:center;justif
         </div>
       </div>
       <div class="fg">
-        <label>Quick Area Filters <span style="font-weight:400;color:#aaa;text-transform:none;letter-spacing:0">(AI highlights suggested chips ✦)</span></label>
+        <label>Research Areas <span style="font-weight:400;color:#aaa;text-transform:none;letter-spacing:0">(AI highlights suggested ✦)</span></label>
         <div class="chips" id="chips"></div>
       </div>
       <div class="filter-foot">
         <button class="search-btn" onclick="search()">Search Professors →</button>
-        <span style="font-size:12px;color:var(--muted)" id="hint-txt">Use AI match above or pick filters here</span>
+        <span style="font-size:12px;color:var(--muted)" id="hint-txt">Use AI match or pick filters</span>
       </div>
     </div>
-
     <div class="rl" id="rl"></div>
     <div class="grid" id="pgrid"></div>
     <div class="pgn" id="pgn"></div>
@@ -281,10 +284,15 @@ nav{background:var(--dark);padding:0 2rem;display:flex;align-items:center;justif
 <div class="page" id="page-colleges">
   <div class="wrap">
     <div class="pg-title">Browse Colleges</div>
-    <div class="pg-sub">Click any college to view its professors</div>
+    <div class="pg-sub">Click any college to explore its professors</div>
     <input class="csearch" placeholder="Search by name or location..." oninput="filterC(this.value)" />
     <div class="cgrid" id="cgrid"></div>
   </div>
+</div>
+
+<!-- PROFESSOR PROFILE PAGE -->
+<div class="page" id="page-prof">
+  <div class="prof-page" id="prof-page-content"></div>
 </div>
 
 <!-- ABOUT -->
@@ -292,35 +300,18 @@ nav{background:var(--dark);padding:0 2rem;display:flex;align-items:center;justif
   <div class="wrap">
     <div class="about-hero">
       <h2>AI meets academia</h2>
-      <p>UniGO uses Claude (Anthropic's AI) to semantically understand your research interests and match you with professors who are genuinely working in your space — not just ones with matching keywords.</p>
+      <p>UniGO uses Claude (Anthropic's AI) to semantically understand your research interests and match you with professors genuinely working in your space — not just keyword matches.</p>
     </div>
     <div class="agrid">
-      <div class="acard"><div class="icon">🤖</div><h3>Semantic AI Matching</h3><p>Claude reads your interest description and each professor's research areas, then scores true semantic overlap — not just keyword hits.</p></div>
-      <div class="acard"><div class="icon">🔍</div><h3>Live Web Scraping</h3><p>Fetch a professor's IIT faculty page or Google Scholar profile to get their latest publications and updated research areas in real time.</p></div>
-      <div class="acard"><div class="icon">📊</div><h3>1,583 Real Professors</h3><p>Built from actual IIT faculty data across 16 institutions, 55+ departments, with verified emails.</p></div>
-      <div class="acard"><div class="icon">🆓</div><h3>Free & Open</h3><p>UniGO is free for all students. No accounts, no paywalls.</p></div>
+      <div class="acard"><div class="icon">🤖</div><h3>Semantic AI Matching</h3><p>Claude reads your interest description and each professor's research areas, then scores true semantic overlap.</p></div>
+      <div class="acard"><div class="icon">🔍</div><h3>Live Web Scraping</h3><p>Fetch any professor's IIT page or Google Scholar to pull latest publications in real time.</p></div>
+      <div class="acard"><div class="icon">📊</div><h3>1,583 Real Professors</h3><p>Verified data from 16 IITs, 55+ departments, with emails and profile links.</p></div>
+      <div class="acard"><div class="icon">🆓</div><h3>Always Free</h3><p>No accounts, no paywalls. Built for students.</p></div>
     </div>
-  </div>
-</div>
-
-<!-- MODAL -->
-<div class="modal-bg" id="modal" onclick="closeModal(event)">
-  <div class="modal">
-    <button class="modal-close" onclick="document.getElementById('modal').classList.remove('open')">✕</button>
-    <div class="m-top">
-      <div class="m-av" id="m-av"></div>
-      <div>
-        <div class="m-name" id="m-name"></div>
-        <div class="m-meta" id="m-meta"></div>
-      </div>
-    </div>
-    <div id="m-ai-reason" style="display:none;background:#f0f0ff;border-radius:10px;padding:12px 14px;font-size:13px;color:#1a1aff;line-height:1.6;margin-bottom:4px"></div>
-    <div class="m-sec">Research Areas</div>
-    <div class="m-areas" id="m-areas"></div>
-    <div class="m-sec">Contact</div>
-    <div class="m-email" id="m-email"></div>
-    <button class="scrape-prof-btn" id="scrape-prof-btn">🔍 Fetch Live Profile &amp; Latest Publications</button>
-    <div class="scrape-prof-log" id="scrape-prof-log"></div>
+    <div class="sec-label">The Team</div>
+    <div class="sec-title" style="margin-bottom:8px">Meet the builders</div>
+    <div class="sec-sub">Students who got tired of cold-emailing the wrong professors.</div>
+    <div class="team-grid" id="team-grid-about"></div>
   </div>
 </div>
 
@@ -332,12 +323,15 @@ const COLLEGES_LIST=["Iit Bhilai","Iit Bhu","Iit Bhubaneswar","Iit Bombay","Iit 
 const PROFS=PROF_DATA.map(r=>({name:r[0],college:r[1],dept:r[2],areas:r[3].split('~').filter(Boolean),email:r[4],scraped:false}));
 const COLORS=['#1a1aff','#ff4d00','#7c3aed','#059669','#dc2626','#d97706','#0891b2','#be185d'];
 
-let results=[],page=1,PER=12,currentProf=null,aiScores={};
+let results=[],page=1,PER=12,aiScores={};
 
 function initials(n){return n.replace(/^(Prof\.|Dr\.)\s*/i,'').split(' ').filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase()}
 function colorOf(n){let h=0;for(const c of n)h=(h<<5)-h+c.charCodeAt(0);return COLORS[Math.abs(h)%COLORS.length]}
 
+/* NAVIGATION */
+let prevPage='home';
 function go(id,el){
+  if(id!=='prof')prevPage=id;
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
@@ -347,7 +341,54 @@ function go(id,el){
   window.scrollTo(0,0);
 }
 
-/* BUILD CHIPS */
+/* TEAM DATA — update these with your real details! */
+const TEAM=[
+  {
+    name:'Vedant',
+    role:'Founder & Developer',
+    photo:'https://raw.githubusercontent.com/Vedantxsh23/UniGO/main/images/beach.jpg',
+    initials:'YN',
+    color:'#1a1aff',
+    linkedin:'https://linkedin.com/in/vedant2311',
+    github:'https://github.com/vedantxsh23',
+    email:'524188@student.nitandhra.ac.in'
+  },
+  {
+    name:'Shriya Rathaur',
+    role:'Fpunder & Data Research',
+    photo:'https://raw.githubusercontent.com/Vedantxsh23/UniGO/main/images/girl.jpg',
+    initials:'TM',
+    color:'#7c3aed',
+    linkedin:'https://linkedin.com/in/shriya-rathaur20',
+    github:'',
+    email:'524175@student.nitandhra.ac.in'
+  },
+ 
+];
+
+function renderTeam(containerId){
+  const el=document.getElementById(containerId);
+  if(!el)return;
+  el.innerHTML=TEAM.map(m=>`
+    <div class="team-card">
+      ${m.photo
+        ?`<img src="${m.photo}" class="team-photo" alt="${m.name}" onerror="this.style.display='none'">`
+        :`<div class="team-photo-placeholder" style="background:${m.color}22;color:${m.color}">${m.initials}</div>`
+      }
+      <div class="team-name">${m.name}</div>
+      <div class="team-role">${m.role}</div>
+      <div class="team-links">
+        ${m.linkedin?`<a href="${m.linkedin}" target="_blank" class="team-link tl-linkedin">in LinkedIn</a>`:''}
+        ${m.github?`<a href="${m.github}" target="_blank" class="team-link tl-github">⌥ GitHub</a>`:''}
+        ${m.email?`<a href="mailto:${m.email}" class="team-link tl-email">✉ Email</a>`:''}
+      </div>
+    </div>
+  `).join('');
+}
+renderTeam('team-grid');
+renderTeam('team-grid-about');
+
+/* CHIPS */
 const chipsEl=document.getElementById('chips');
 TOP_AREAS.forEach(a=>{
   const d=document.createElement('div');
@@ -356,14 +397,13 @@ TOP_AREAS.forEach(a=>{
   chipsEl.appendChild(d);
 });
 
-/* BUILD SELECTS */
+/* SELECTS */
 const selC=document.getElementById('sel-college');
 COLLEGES_LIST.forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=c;selC.appendChild(o)});
 const depts=[...new Set(PROFS.map(p=>p.dept))].sort();
 const selD=document.getElementById('sel-dept');
 depts.forEach(d=>{const o=document.createElement('option');o.value=d;o.textContent=d.length>48?d.slice(0,48)+'…':d;selD.appendChild(o)});
 
-/* KEYWORD MATCH SCORE */
 function kwScore(prof,selAreas){
   if(!selAreas.length)return 50;
   const pa=prof.areas.map(a=>a.toLowerCase());
@@ -372,277 +412,127 @@ function kwScore(prof,selAreas){
   return Math.round((hits/selAreas.length)*100);
 }
 
-/* SEARCH */
 function search(){
   const college=document.getElementById('sel-college').value;
   const dept=document.getElementById('sel-dept').value;
   const selAreas=[...document.querySelectorAll('.chip.on')].map(c=>c.textContent);
   document.getElementById('hint-txt').textContent=selAreas.length?selAreas.length+' area(s) selected':'Browsing all professors';
-
   let filtered=PROFS.filter(p=>{
     if(college&&p.college!==college)return false;
     if(dept&&p.dept!==dept)return false;
     return true;
   });
-
   results=filtered.map(p=>{
     const kw=kwScore(p,selAreas);
-    const ai=aiScores[p.name]||null;
+    const ai=aiScores[p.name]??null;
     const score=ai!==null?Math.round(ai*0.65+kw*0.35):kw;
     return{...p,kwScore:kw,aiScore:ai,score};
   }).filter(p=>p.score>0).sort((a,b)=>b.score-a.score);
-
   page=1;render();
 }
 
 function render(){
   const total=results.length;
-  if(!total){document.getElementById('pgrid').innerHTML='<div style="color:var(--muted);font-size:14px;padding:20px 0">No professors found. Try broadening your filters.</div>';document.getElementById('rl').textContent='';document.getElementById('pgn').innerHTML='';return;}
+  if(!total){document.getElementById('pgrid').innerHTML='<div style="color:var(--muted);font-size:14px;padding:20px 0">No professors found. Try broader filters.</div>';document.getElementById('rl').textContent='';document.getElementById('pgn').innerHTML='';return;}
   const pages=Math.ceil(total/PER);
   const slice=results.slice((page-1)*PER,page*PER);
   document.getElementById('rl').textContent=`Showing ${(page-1)*PER+1}–${Math.min(page*PER,total)} of ${total} professors`;
-
+  const selAreas=[...document.querySelectorAll('.chip.on')].map(c=>c.textContent.toLowerCase());
   document.getElementById('pgrid').innerHTML=slice.map(p=>{
     const clr=colorOf(p.name);
-    const init=initials(p.name);
-    const selAreas=[...document.querySelectorAll('.chip.on')].map(c=>c.textContent.toLowerCase());
     const tags=p.areas.slice(0,3).map(a=>{
-      const isMatch=selAreas.some(s=>a.toLowerCase().includes(s)||s.includes(a.toLowerCase()));
-      return`<span class="ptag${isMatch?' match':''}">${a}</span>`;
+      const m=selAreas.some(s=>a.toLowerCase().includes(s)||s.includes(a.toLowerCase()));
+      return`<span class="ptag${m?' match':''}">${a}</span>`;
     }).join('');
-    let badge='';
-    if(p.aiScore!==null)badge=`<span class="mbadge ai">✨ ${p.aiScore}%</span>`;
-    else if(p.kwScore<100)badge=`<span class="mbadge high">${p.kwScore}%</span>`;
-    const scrapedBadge=p.scraped?'<span class="scrape-badge">Live ✦</span>':'';
-    const isAiTop=p.aiScore!==null&&p.aiScore>=75;
-    return`<div class="pcard${isAiTop?' ai-match':''}" onclick='openModal(${JSON.stringify(p)})'>
-      ${scrapedBadge}
-      <div class="av" style="background:${clr}22;color:${clr}">${init}</div>
+    let badge=p.aiScore!==null?`<span class="mbadge ai">✨${p.aiScore}%</span>`:p.kwScore<100?`<span class="mbadge high">${p.kwScore}%</span>`:'';
+    return`<div class="pcard${p.aiScore>=75?' ai-match':''}" onclick='openProfPage(${JSON.stringify(p).replace(/'/g,"&#39;")})'>
+      <div class="av" style="background:${clr}22;color:${clr}">${initials(p.name)}</div>
       <div class="pi">
         <div class="pname">${p.name}</div>
-        <div class="pcollege">${p.college} · ${p.dept.length>32?p.dept.slice(0,32)+'…':p.dept}</div>
+        <div class="pcollege">${p.college} · ${p.dept.length>30?p.dept.slice(0,30)+'…':p.dept}</div>
         <div class="ptags">${tags}</div>
-      </div>
-      ${badge}
+      </div>${badge}
     </div>`;
   }).join('');
-
-  const pgn=document.getElementById('pgn');
-  if(pages<=1){pgn.innerHTML='';return;}
   let btns='';
-  if(page>1)btns+=`<button onclick="goPage(${page-1})">← Prev</button>`;
-  for(let i=Math.max(1,page-2);i<=Math.min(pages,page+2);i++)
-    btns+=`<button class="${i===page?'cur':''}" onclick="goPage(${i})">${i}</button>`;
-  if(page<pages)btns+=`<button onclick="goPage(${page+1})">Next →</button>`;
-  pgn.innerHTML=btns;
+  if(pages>1){
+    if(page>1)btns+=`<button onclick="goPage(${page-1})">← Prev</button>`;
+    for(let i=Math.max(1,page-2);i<=Math.min(pages,page+2);i++)btns+=`<button class="${i===page?'cur':''}" onclick="goPage(${i})">${i}</button>`;
+    if(page<pages)btns+=`<button onclick="goPage(${page+1})">Next →</button>`;
+  }
+  document.getElementById('pgn').innerHTML=btns;
 }
-
 function goPage(n){page=n;render();window.scrollTo(0,260);}
 
-/* AI MATCH */
-async function runAIMatch(){
-  const input=document.getElementById('ai-input').value.trim();
-  if(!input){alert('Please describe your research interests first.');return;}
-
-  const btn=document.getElementById('ai-btn');
-  const statusEl=document.getElementById('ai-status');
-  const resultBar=document.getElementById('ai-result-bar');
-  btn.disabled=true;
-  statusEl.innerHTML='<div class="ai-spinner"></div> Claude is reading your interests…';
-  resultBar.style.display='none';
-
-  // Build a sample of professors to score (send top 120 by keyword relevance + random sample)
-  const selAreas=[...document.querySelectorAll('.chip.on')].map(c=>c.textContent);
-  const college=document.getElementById('sel-college').value;
-  const dept=document.getElementById('sel-dept').value;
-
-  let pool=PROFS.filter(p=>{
-    if(college&&p.college!==college)return false;
-    if(dept&&p.dept!==dept)return false;
-    return true;
-  });
-
-  // Take top 80 by keyword + 40 random for diversity
-  const byKw=[...pool].sort((a,b)=>kwScore(b,selAreas)-kwScore(a,selAreas));
-  const top80=byKw.slice(0,80);
-  const rest=byKw.slice(80);
-  const rand40=rest.sort(()=>Math.random()-0.5).slice(0,40);
-  const sample=[...top80,...rand40];
-
-  const profList=sample.map((p,i)=>`${i+1}. ${p.name} (${p.college}, ${p.dept}): ${p.areas.join(', ')}`).join('\n');
-
-  const prompt=`You are a research advisor AI helping a student find the best professor match.
-
-Student's research interests:
-"${input}"
-
-Below are ${sample.length} professors with their research areas. Score each professor from 0–100 based on how well their research aligns with the student's interests. Consider semantic meaning, not just keywords. A professor working on "neural networks for genomics" is relevant to someone interested in "AI for biology."
-
-Return ONLY a JSON object like: {"scores": {"Professor Name": score, ...}}
-Include only professors with score >= 40. No explanation, just JSON.
-
-Professors:
-${profList}`;
-
-  try{
-    statusEl.innerHTML='<div class="ai-spinner"></div> Scoring ${sample.length} professors…';
-    const res=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        model:'claude-sonnet-4-20250514',
-        max_tokens:1000,
-        messages:[{role:'user',content:prompt}]
-      })
-    });
-    const data=await res.json();
-    const text=data.content?.find(b=>b.type==='text')?.text||'';
-    const jsonMatch=text.match(/\{[\s\S]*\}/);
-    if(!jsonMatch)throw new Error('No JSON in response');
-    const parsed=JSON.parse(jsonMatch[0]);
-    const scores=parsed.scores||parsed;
-
-    aiScores={};
-    let matchCount=0;
-    for(const [name,score] of Object.entries(scores)){
-      const prof=PROFS.find(p=>p.name===name||name.includes(p.name.split(' ').slice(-1)[0]));
-      if(prof){aiScores[prof.name]=Math.min(100,Math.round(score));matchCount++;}
-    }
-
-    // Highlight relevant chips based on AI interpretation
-    statusEl.innerHTML='<div class="ai-spinner"></div> Highlighting relevant areas…';
-    await highlightChips(input);
-
-    resultBar.style.display='block';
-    resultBar.textContent=`✦ AI found ${matchCount} strong matches from ${sample.length} professors analyzed. Results re-ranked below.`;
-    statusEl.innerHTML='';
-    btn.disabled=false;
-    search();
-  }catch(e){
-    console.error(e);
-    statusEl.innerHTML='';
-    resultBar.style.display='block';
-    resultBar.style.color='#ff6b6b';
-    resultBar.textContent='⚠ AI matching needs an Anthropic API key configured. Using keyword matching instead.';
-    btn.disabled=false;
-    search();
-  }
-}
-
-async function highlightChips(input){
-  try{
-    const areaNames=TOP_AREAS.join(', ');
-    const res=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        model:'claude-sonnet-4-20250514',
-        max_tokens:200,
-        messages:[{role:'user',content:`Given this student interest: "${input}"\n\nWhich of these research areas are most relevant? Return ONLY a JSON array of the relevant area names exactly as written: [${areaNames}]\n\nReturn only a JSON array, no explanation.`}]
-      })
-    });
-    const data=await res.json();
-    const text=data.content?.find(b=>b.type==='text')?.text||'';
-    const match=text.match(/\[[\s\S]*\]/);
-    if(!match)return;
-    const suggested=JSON.parse(match[0]);
-    document.querySelectorAll('.chip').forEach(c=>{
-      c.classList.remove('ai-highlight');
-      if(suggested.includes(c.dataset.area))c.classList.add('ai-highlight');
-    });
-  }catch(e){console.error('chip highlight failed',e);}
-}
-
-/* SCRAPE URL */
-async function scrapeUrl(){
-  const url=document.getElementById('scrape-url').value.trim();
-  if(!url){alert('Please enter a URL first.');return;}
-  const log=document.getElementById('scrape-log');
-  log.style.display='block';
-  log.textContent='Fetching: '+url+'\n';
-
-  try{
-    log.textContent+='Sending to AI for extraction...\n';
-    const res=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        model:'claude-sonnet-4-20250514',
-        max_tokens:1000,
-        tools:[{type:'web_search_20250305',name:'web_search'}],
-        messages:[{role:'user',content:`Search for and extract research information from this professor profile: ${url}
-
-Return a JSON object with: {"name":"...", "research_areas":["..."], "recent_publications":["title (year)"], "bio_summary":"..."}`}]
-      })
-    });
-    const data=await res.json();
-    const text=data.content?.filter(b=>b.type==='text').map(b=>b.text).join('\n')||'';
-    const jsonMatch=text.match(/\{[\s\S]*\}/);
-    if(jsonMatch){
-      const info=JSON.parse(jsonMatch[0]);
-      log.textContent+='✓ Extracted:\n';
-      log.textContent+=`  Name: ${info.name||'—'}\n`;
-      log.textContent+=`  Research: ${(info.research_areas||[]).join(', ')}\n`;
-      if(info.recent_publications?.length){
-        log.textContent+=`  Publications:\n`;
-        info.recent_publications.slice(0,3).forEach(p=>log.textContent+=`    • ${p}\n`);
-      }
-      // Try to match to existing professor
-      if(info.name){
-        const match=PROFS.find(p=>p.name.toLowerCase().includes(info.name.toLowerCase().split(' ').slice(-1)[0]));
-        if(match){
-          if(info.research_areas)match.areas=[...new Set([...match.areas,...info.research_areas])];
-          match.scraped=true;
-          log.textContent+=`✓ Updated profile for ${match.name} in database\n`;
-          search();
-        }
-      }
-    }else{
-      log.textContent+=text.slice(0,400)+'\n';
-    }
-  }catch(e){
-    log.textContent+='⚠ Scraping requires Anthropic API key + web_search tool enabled.\n';
-    log.textContent+=`Error: ${e.message}\n`;
-  }
-}
-
-/* MODAL */
-function openModal(p){
+/* PROFESSOR FULL PROFILE PAGE */
+function openProfPage(p){
   if(typeof p==='string')p=JSON.parse(p);
-  currentProf=p;
   const clr=colorOf(p.name);
-  document.getElementById('m-av').style.cssText=`background:${clr}22;color:${clr}`;
-  document.getElementById('m-av').textContent=initials(p.name);
-  document.getElementById('m-name').textContent=p.name;
-  document.getElementById('m-meta').textContent=`${p.college} · ${p.dept}`;
-  
   const selAreas=[...document.querySelectorAll('.chip.on')].map(c=>c.textContent.toLowerCase());
-  document.getElementById('m-areas').innerHTML=p.areas.map(a=>{
-    const isMatch=selAreas.some(s=>a.toLowerCase().includes(s)||s.includes(a.toLowerCase()));
-    return`<span class="m-area${isMatch?' match':''}">${a}</span>`;
+  const cInfo=COLLEGE_INFO[p.college]||{};
+
+  // Build LinkedIn search URL
+  const linkedinSearch=`https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(p.name+' '+p.college)}`;
+  const scholarSearch=`https://scholar.google.com/scholar?q=${encodeURIComponent(p.name+' '+p.college)}`;
+  const iitWebSearch=`https://www.google.com/search?q=${encodeURIComponent(p.name+' '+p.college+' faculty')}`;
+
+  const collegeBanner=cInfo.img
+    ?`<img src="${cInfo.img}" class="college-banner" alt="${p.college}" onerror="this.style.display='none'">`
+    :`<div class="college-banner-placeholder">🏛️</div>`;
+
+  const areaHtml=p.areas.map(a=>{
+    const m=selAreas.some(s=>a.toLowerCase().includes(s)||s.includes(a.toLowerCase()));
+    return`<span class="area-pill${m?' match':''}">${a}</span>`;
   }).join('');
-  document.getElementById('m-email').innerHTML=p.email?`✉️ <a href="mailto:${p.email}">${p.email}</a>`:'<span style="color:var(--muted)">Not listed</span>';
 
-  const aiR=document.getElementById('m-ai-reason');
-  if(p.aiScore!==null&&p.aiScore!==undefined){
-    aiR.style.display='block';
-    aiR.textContent=`✨ AI Match Score: ${p.aiScore}% — Claude rated this professor's research as a strong semantic match to your interests.`;
-  }else{aiR.style.display='none';}
+  const aiReason=p.aiScore>=40?`
+    <div style="background:#f0f0ff;border-radius:10px;padding:12px 14px;font-size:13px;color:#1a1aff;line-height:1.6;margin-bottom:16px">
+      ✨ <strong>AI Match Score: ${p.aiScore}%</strong> — Claude identified strong semantic alignment between your interests and this professor's research.
+    </div>`:'';
 
-  document.getElementById('scrape-prof-log').style.display='none';
-  document.getElementById('scrape-prof-log').textContent='';
-  document.getElementById('modal').classList.add('open');
+  document.getElementById('prof-page-content').innerHTML=`
+    <div class="prof-back" onclick="go('finder',document.querySelectorAll('.nav-links a')[1])">← Back to results</div>
+    ${collegeBanner}
+    <div class="prof-hero">
+      <div class="prof-avatar-lg" style="background:${clr}33;color:${clr}">${initials(p.name)}</div>
+      <div class="prof-hero-info">
+        <div class="prof-hero-name">${p.name}</div>
+        <div class="prof-hero-college">${p.college} &nbsp;·&nbsp; ${p.dept}</div>
+        <div class="prof-hero-links">
+          <a href="${linkedinSearch}" target="_blank" class="phl phl-linkedin">in LinkedIn</a>
+          <a href="${scholarSearch}" target="_blank" class="phl phl-scholar">🎓 Google Scholar</a>
+          <a href="${iitWebSearch}" target="_blank" class="phl phl-website">🔗 Faculty Page</a>
+          ${p.email?`<a href="mailto:${p.email}" class="phl phl-email">✉ ${p.email}</a>`:''}
+        </div>
+      </div>
+    </div>
+    ${aiReason}
+    <div class="prof-section">
+      <div class="prof-sec-title">Research Areas</div>
+      <div class="area-grid">${areaHtml}</div>
+    </div>
+    <div class="prof-section" id="pub-section" style="display:none">
+      <div class="prof-sec-title">Recent Publications</div>
+      <div class="pub-list" id="pub-list"></div>
+    </div>
+    <div class="scrape-section">
+      <div class="scrape-sec-title">🔍 Live Data</div>
+      <button class="live-btn" id="live-fetch-btn" onclick="fetchLiveProfile('${p.name.replace(/'/g,"\\'")}','${p.college}','${p.dept.replace(/'/g,"\\'")}')">
+        ✦ Fetch Latest Publications & Profile
+      </button>
+      <div class="live-log" id="live-log"></div>
+    </div>
+  `;
+  go('prof',null);
 }
 
-function closeModal(e){if(e.target.id==='modal')document.getElementById('modal').classList.remove('open');}
-
-document.getElementById('scrape-prof-btn').onclick=async function(){
-  if(!currentProf){return;}
-  const log=document.getElementById('scrape-prof-log');
+/* LIVE PROFILE FETCH */
+async function fetchLiveProfile(name,college,dept){
+  const btn=document.getElementById('live-fetch-btn');
+  const log=document.getElementById('live-log');
+  btn.disabled=true;btn.textContent='Fetching…';
   log.style.display='block';
-  log.textContent=`Searching for ${currentProf.name}'s profile...\n`;
-  this.disabled=true;
-
+  log.textContent=`Searching for ${name}'s profile...\n`;
   try{
     const res=await fetch('https://api.anthropic.com/v1/messages',{
       method:'POST',
@@ -651,80 +541,160 @@ document.getElementById('scrape-prof-btn').onclick=async function(){
         model:'claude-sonnet-4-20250514',
         max_tokens:800,
         tools:[{type:'web_search_20250305',name:'web_search'}],
-        messages:[{role:'user',content:`Search for professor ${currentProf.name} at ${currentProf.college}, department of ${currentProf.dept}. Find their faculty page and Google Scholar profile. Extract: recent publications (last 3 years), current research areas, any awards or notable work. Return as JSON: {"research_areas":[],"publications":[],"scholar_url":"","summary":""}`}]
+        messages:[{role:'user',content:`Search for professor ${name} at ${college}, department of ${dept}. Find their faculty page and Google Scholar. Extract: recent publications (last 3 years with year), current research areas, h-index if available, any awards. Return JSON only: {"research_areas":[],"publications":[{"title":"","year":"","venue":""}],"h_index":"","awards":[],"scholar_url":"","faculty_url":"","summary":""}`}]
       })
     });
     const data=await res.json();
     const text=data.content?.filter(b=>b.type==='text').map(b=>b.text).join('\n')||'';
-    const jm=text.match(/\{[\s\S]*\}/);
+    const jm=text.match(/\{[\s\S]*?\}/);
     if(jm){
       const info=JSON.parse(jm[0]);
-      log.textContent='✓ Live data fetched!\n\n';
-      if(info.summary)log.textContent+=`Summary: ${info.summary}\n\n`;
-      if(info.research_areas?.length){
-        log.textContent+=`Updated research areas:\n${info.research_areas.map(a=>`  • ${a}`).join('\n')}\n\n`;
-        currentProf.areas=[...new Set([...currentProf.areas,...info.research_areas])];
-        document.getElementById('m-areas').innerHTML=currentProf.areas.map(a=>`<span class="m-area">${a}</span>`).join('');
-      }
+      log.textContent='✓ Profile fetched!\n';
+      if(info.summary)log.textContent+=`\n${info.summary}\n`;
+      if(info.h_index)log.textContent+=`\nH-index: ${info.h_index}`;
+      if(info.awards?.length)log.textContent+=`\nAwards: ${info.awards.join(', ')}`;
+      if(info.scholar_url)log.textContent+=`\nScholar: ${info.scholar_url}`;
       if(info.publications?.length){
-        log.textContent+=`Recent publications:\n${info.publications.slice(0,5).map(p=>`  • ${p}`).join('\n')}\n`;
+        const sec=document.getElementById('pub-section');
+        const list=document.getElementById('pub-list');
+        sec.style.display='block';
+        list.innerHTML=info.publications.slice(0,5).map(pub=>`
+          <div class="pub-item">
+            <strong>${pub.title||pub}</strong>
+            <span>${pub.year||''} ${pub.venue?'· '+pub.venue:''}</span>
+          </div>`).join('');
       }
-      if(info.scholar_url)log.textContent+=`\nGoogle Scholar: ${info.scholar_url}\n`;
-      currentProf.scraped=true;
-      search();
-    }else{
-      log.textContent+=text.slice(0,500);
-    }
+    }else{log.textContent+=text.slice(0,400);}
   }catch(e){
-    log.textContent+=`⚠ Live scraping requires the Anthropic API key to be configured server-side.\nError: ${e.message}`;
+    log.textContent+=`⚠ Needs Anthropic API key (backend proxy).\n${e.message}`;
   }
-  this.disabled=false;
-};
+  btn.disabled=false;btn.textContent='✦ Refresh Data';
+}
 
-/* COLLEGES */
+/* AI MATCH */
+async function runAIMatch(){
+  const input=document.getElementById('ai-input').value.trim();
+  if(!input){alert('Please describe your research interests first.');return;}
+  const btn=document.getElementById('ai-btn');
+  const statusEl=document.getElementById('ai-status');
+  const resultBar=document.getElementById('ai-result-bar');
+  btn.disabled=true;
+  statusEl.innerHTML='<div class="ai-spinner"></div> Claude is reading your interests…';
+  resultBar.style.display='none';
+  const selAreas=[...document.querySelectorAll('.chip.on')].map(c=>c.textContent);
+  const college=document.getElementById('sel-college').value;
+  const dept=document.getElementById('sel-dept').value;
+  let pool=PROFS.filter(p=>{
+    if(college&&p.college!==college)return false;
+    if(dept&&p.dept!==dept)return false;
+    return true;
+  });
+  const byKw=[...pool].sort((a,b)=>kwScore(b,selAreas)-kwScore(a,selAreas));
+  const sample=[...byKw.slice(0,80),...byKw.slice(80).sort(()=>Math.random()-.5).slice(0,40)];
+  const profList=sample.map((p,i)=>`${i+1}. ${p.name} (${p.college}, ${p.dept}): ${p.areas.join(', ')}`).join('\n');
+  const prompt=`You are a research advisor. Score each professor 0–100 for how well their research matches the student's interests. Consider semantic meaning deeply.
+
+Student: "${input}"
+
+Return ONLY JSON: {"scores":{"Professor Name":score,...}} — only include scores >= 40.
+
+Professors:
+${profList}`;
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]})
+    });
+    const data=await res.json();
+    const text=data.content?.find(b=>b.type==='text')?.text||'';
+    const jm=text.match(/\{[\s\S]*\}/);
+    if(!jm)throw new Error('No JSON');
+    const scores=(JSON.parse(jm[0])).scores||JSON.parse(jm[0]);
+    aiScores={};
+    let cnt=0;
+    for(const[name,score]of Object.entries(scores)){
+      const prof=PROFS.find(p=>p.name===name||name.includes(p.name.split(' ').slice(-1)[0]));
+      if(prof){aiScores[prof.name]=Math.min(100,Math.round(score));cnt++;}
+    }
+    await highlightChips(input);
+    resultBar.style.display='block';
+    resultBar.textContent=`✦ AI found ${cnt} strong matches from ${sample.length} professors analyzed. Results re-ranked.`;
+    statusEl.innerHTML='';btn.disabled=false;search();
+  }catch(e){
+    statusEl.innerHTML='';
+    resultBar.style.display='block';resultBar.style.color='#ff6b6b';
+    resultBar.textContent='⚠ AI matching needs Anthropic API key configured. Using keyword matching.';
+    btn.disabled=false;search();
+  }
+}
+
+async function highlightChips(input){
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:200,messages:[{role:'user',content:`Student interest: "${input}"\nWhich are most relevant? Return ONLY a JSON array from: [${TOP_AREAS.join(',')}]`}]})
+    });
+    const data=await res.json();
+    const text=data.content?.find(b=>b.type==='text')?.text||'';
+    const m=text.match(/\[[\s\S]*\]/);
+    if(!m)return;
+    const suggested=JSON.parse(m[0]);
+    document.querySelectorAll('.chip').forEach(c=>{
+      c.classList.remove('ai-highlight');
+      if(suggested.includes(c.dataset.area))c.classList.add('ai-highlight');
+    });
+  }catch(e){}
+}
+
+/* COLLEGES PAGE */
 const COLLEGE_INFO={
-  'Iit Bombay':{loc:'Mumbai, Maharashtra',rank:'#1 in India',founded:1958,depts:17},
-  'Iit Delhi':{loc:'New Delhi',rank:'#2 in India',founded:1961,depts:13},
-  'Iit Madras':{loc:'Chennai, Tamil Nadu',rank:'#3 in India',founded:1959,depts:16},
-  'Iit Kharagpur':{loc:'Kharagpur, West Bengal',rank:'#4 in India',founded:1951,depts:19},
-  'Iit Kanpur':{loc:'Kanpur, Uttar Pradesh',rank:'#5 in India',founded:1959,depts:14},
-  'Iit Roorkee':{loc:'Roorkee, Uttarakhand',rank:'Top IIT',founded:1847,depts:21},
-  'Iit Guwahati':{loc:'Guwahati, Assam',rank:'Top IIT',founded:1994,depts:11},
-  'Iit Indore':{loc:'Indore, Madhya Pradesh',rank:'Top IIT',founded:2009,depts:9},
-  'Iit Gandhinagar':{loc:'Gandhinagar, Gujarat',rank:'Top IIT',founded:2008,depts:7},
-  'Iit Bhu':{loc:'Varanasi, Uttar Pradesh',rank:'Top IIT',founded:1919,depts:16},
-  'Iit Jodhpur':{loc:'Jodhpur, Rajasthan',rank:'New IIT',founded:2008,depts:9},
-  'Iit Ropar':{loc:'Rupnagar, Punjab',rank:'New IIT',founded:2008,depts:7},
-  'Iit Jammu':{loc:'Jammu, J&K',rank:'New IIT',founded:2016,depts:6},
-  'Iit Palakkad':{loc:'Palakkad, Kerala',rank:'New IIT',founded:2015,depts:5},
-  'Iit Bhilai':{loc:'Bhilai, Chhattisgarh',rank:'New IIT',founded:2016,depts:5},
-  'Iit Bhubaneswar':{loc:'Bhubaneswar, Odisha',rank:'New IIT',founded:2008,depts:7},
-  'Iit Dharwad':{loc:'Dharwad, Karnataka',rank:'New IIT',founded:2016,depts:5},
-  'Iit Tirupati':{loc:'Tirupati, Andhra Pradesh',rank:'New IIT',founded:2015,depts:5},
-  'Iit Goa':{loc:'Ponda, Goa',rank:'New IIT',founded:2016,depts:4},
+  'Iit Bombay':{loc:'Mumbai, Maharashtra',rank:'#1 NIRF',founded:1958,depts:17,img:'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/IIT_Bombay_-_Lecture_Hall_Complex.jpg/1280px-IIT_Bombay_-_Lecture_Hall_Complex.jpg'},
+  'Iit Delhi':{loc:'New Delhi',rank:'#2 NIRF',founded:1961,depts:13,img:'https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/IIT_Delhi_-_Main_Building.jpg/1280px-IIT_Delhi_-_Main_Building.jpg'},
+  'Iit Madras':{loc:'Chennai, Tamil Nadu',rank:'#3 NIRF',founded:1959,depts:16,img:'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/IIT_Madras_-_A_View.jpg/1280px-IIT_Madras_-_A_View.jpg'},
+  'Iit Kharagpur':{loc:'Kharagpur, West Bengal',rank:'#4 NIRF',founded:1951,depts:19,img:'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/IIT_Kharagpur_-_Technology_Square.jpg/1280px-IIT_Kharagpur_-_Technology_Square.jpg'},
+  'Iit Kanpur':{loc:'Kanpur, Uttar Pradesh',rank:'#5 NIRF',founded:1959,depts:14,img:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/IIT_Kanpur_-_Main_Building.jpg/1280px-IIT_Kanpur_-_Main_Building.jpg'},
+  'Iit Roorkee':{loc:'Roorkee, Uttarakhand',rank:'#6 NIRF',founded:1847,depts:21,img:'https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/IIT_Roorkee_-_Main_Building.jpg/1280px-IIT_Roorkee_-_Main_Building.jpg'},
+  'Iit Guwahati':{loc:'Guwahati, Assam',rank:'#7 NIRF',founded:1994,depts:11,img:'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/IIT_Guwahati_-_View.jpg/1280px-IIT_Guwahati_-_View.jpg'},
+  'Iit Indore':{loc:'Indore, Madhya Pradesh',rank:'Top IIT',founded:2009,depts:9,img:''},
+  'Iit Gandhinagar':{loc:'Gandhinagar, Gujarat',rank:'Top IIT',founded:2008,depts:7,img:''},
+  'Iit Bhu':{loc:'Varanasi, Uttar Pradesh',rank:'Top IIT',founded:1919,depts:16,img:''},
+  'Iit Jodhpur':{loc:'Jodhpur, Rajasthan',rank:'New IIT',founded:2008,depts:9,img:''},
+  'Iit Ropar':{loc:'Rupnagar, Punjab',rank:'New IIT',founded:2008,depts:7,img:''},
+  'Iit Jammu':{loc:'Jammu, J&K',rank:'New IIT',founded:2016,depts:6,img:''},
+  'Iit Palakkad':{loc:'Palakkad, Kerala',rank:'New IIT',founded:2015,depts:5,img:''},
+  'Iit Bhilai':{loc:'Bhilai, Chhattisgarh',rank:'New IIT',founded:2016,depts:5,img:''},
+  'Iit Bhubaneswar':{loc:'Bhubaneswar, Odisha',rank:'New IIT',founded:2008,depts:7,img:''},
+  'Iit Dharwad':{loc:'Dharwad, Karnataka',rank:'New IIT',founded:2016,depts:5,img:''},
+  'Iit Tirupati':{loc:'Tirupati, Andhra Pradesh',rank:'New IIT',founded:2015,depts:5,img:''},
+  'Iit Goa':{loc:'Ponda, Goa',rank:'New IIT',founded:2016,depts:4,img:''},
 };
 
 function renderColleges(q){
   const colleges=[...new Set(PROFS.map(p=>p.college))].sort();
-  let list=q?colleges.filter(c=>c.toLowerCase().includes(q.toLowerCase())):colleges;
+  const list=q?colleges.filter(c=>c.toLowerCase().includes(q.toLowerCase())):colleges;
   document.getElementById('cgrid').innerHTML=list.map(c=>{
-    const info=COLLEGE_INFO[c]||{loc:'India',rank:'IIT',founded:'—',depts:'—'};
+    const info=COLLEGE_INFO[c]||{loc:'India',rank:'IIT',founded:'—',depts:'—',img:''};
     const cnt=PROFS.filter(p=>p.college===c).length;
+    const imgHtml=info.img
+      ?`<img src="${info.img}" class="ccard-img" alt="${c}" onerror="this.outerHTML='<div class=ccard-img-placeholder>🏛️</div>'">`
+      :`<div class="ccard-img-placeholder">🏛️</div>`;
     return`<div class="ccard" onclick="go('finder',document.querySelectorAll('.nav-links a')[1]);document.getElementById('sel-college').value='${c}';search()">
-      <div class="crank">${info.rank}</div>
-      <div class="cname">${c}</div>
-      <div class="cloc">📍 ${info.loc}</div>
-      <div class="cmeta">
-        <div class="cmet"><strong>${cnt}</strong>Professors</div>
-        <div class="cmet"><strong>${info.depts}</strong>Depts</div>
-        <div class="cmet"><strong>${info.founded}</strong>Founded</div>
+      ${imgHtml}
+      <div class="ccard-body">
+        <div class="crank">${info.rank}</div>
+        <div class="cname">${c}</div>
+        <div class="cloc">📍 ${info.loc}</div>
+        <div class="cmeta">
+          <div class="cmet"><strong>${cnt}</strong>Profs</div>
+          <div class="cmet"><strong>${info.depts}</strong>Depts</div>
+          <div class="cmet"><strong>${info.founded}</strong>Founded</div>
+        </div>
       </div>
     </div>`;
   }).join('');
 }
 
 function filterC(q){renderColleges(q);}
-
 search();
 </script>
 </body>
