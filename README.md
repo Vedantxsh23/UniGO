@@ -21,7 +21,7 @@ UniGO helps students find the perfect research mentor by semantically matching t
 
 ## 🚀 Live Demo
 
-👉 **[unigo.github.io/UniGO](https://yourusername.github.io/UniGO)**
+👉 **[unigo.github.io/UniGO](https://yourusername.github.io/unigo)**
 
 ---
 
